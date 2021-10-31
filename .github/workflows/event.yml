@@ -4,6 +4,6 @@ on:
     types: [deploy-again]
 jobs:
   deploy-itself-again:
-    uses: titaneric/wasm-bindgen/.github/workflows/deploy.yml@main
+    uses: titaneric/wasm-bindgen/.github/workflows/deploy.yml@master
     secrets:
       personal-token: ${{ secrets.PERSONAL_TOKEN }}

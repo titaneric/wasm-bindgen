@@ -8,7 +8,7 @@ on:
         required: true
   push:
     branches:
-      - main
+      - master
   pull_request:
 
 jobs:
@@ -65,7 +65,7 @@ jobs:
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/master' }}
         with:
           personal_token: ${{ secrets.PERSONAL_TOKEN || secrets.personal-token }}
           external_repository: titaneric/titaneric.github.io

@@ -60,7 +60,7 @@ jobs:
       - name: ls
         run: ls 
       - name: build mdBook artifact
-        working-directory: wasm-bindgen
+        working-directory: wasm-bindgen/guide
         run: $GITHUB_WORKSPACE/mdBook/target/release/mdbook build -d wasm-bindgen
 
       - name: Deploy
@@ -70,6 +70,6 @@ jobs:
           personal_token: ${{ secrets.PERSONAL_TOKEN || secrets.personal-token }}
           external_repository: titaneric/titaneric.github.io
           publish_branch: gh-pages
-          publish_dir: wasm-bindgen/wasm-bindgen
+          publish_dir: wasm-bindgen/guide/wasm-bindgen
           destination_dir: ./wasm-bindgen
           keep_files: true

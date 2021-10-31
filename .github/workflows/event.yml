@@ -1,0 +1,9 @@
+name: Repository Dispatch
+on:
+  repository_dispatch:
+    types: [deploy-again]
+jobs:
+  deploy-itself-again:
+    uses: titaneric/wasm-bindgen/.github/workflows/deploy.yml@main
+    secrets:
+      personal-token: ${{ secrets.PERSONAL_TOKEN }}

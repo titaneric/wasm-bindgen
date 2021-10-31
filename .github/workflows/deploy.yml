@@ -1,0 +1,75 @@
+name: github pages
+
+on:
+  workflow_call:
+    secrets:
+      personal-token:
+        description: A token to deploy to github pages
+        required: true
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+
+      - uses: actions/checkout@v2
+        # if: steps.mdbook_cache.outputs.cache-hit != 'true'
+        with:
+          repository: 'titaneric/mdBook'
+          ref: master
+          token: ${{ secrets.PERSONAL_TOKEN || secrets.personal-token }}
+          path: mdBook
+      - name: Install build-essential
+        # if: steps.mdbook_cache.outputs.cache-hit != 'true'
+        run: sudo apt update && sudo apt install -y build-essential zstd
+      - name: ls
+        run: ls 
+      - name: ls
+        run: ls $GITHUB_WORKSPACE/mdBook
+      - uses: actions-rs/toolchain@v1
+        # if: steps.mdbook_cache.outputs.cache-hit != 'true'
+        with:
+          toolchain: stable
+      - uses: actions/cache@v2
+        name: check cache
+        id: mdbook_cache
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            $GITHUB_WORKSPACE/mdBook/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('$GITHUB_WORKSPACE/mdBook/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
+      - name: build mdbook executable
+        # if: steps.mdbook_cache.outputs.cache-hit != 'true'
+        run: cargo build --release
+        working-directory: mdBook
+
+      - uses: actions/checkout@v2
+        with:
+          path: wasm-bindgen
+      - name: ls
+        run: ls 
+      - name: build mdBook artifact
+        working-directory: wasm-bindgen
+        run: $GITHUB_WORKSPACE/mdBook/target/release/mdbook build -d wasm-bindgen
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          personal_token: ${{ secrets.PERSONAL_TOKEN || secrets.personal-token }}
+          external_repository: titaneric/titaneric.github.io
+          publish_branch: gh-pages
+          publish_dir: wasm-bindgen/wasm-bindgen
+          destination_dir: ./wasm-bindgen
+          keep_files: true

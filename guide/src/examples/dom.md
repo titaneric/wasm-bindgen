@@ -21,6 +21,6 @@ enable all the various APIs:
 
 ## `src/lib.rs`
 
-```rust
+```rust,wasm
 {{#include ../../../examples/dom/src/lib.rs}}
 ```

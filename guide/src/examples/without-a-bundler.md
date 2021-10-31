@@ -12,7 +12,7 @@ documentation][deployment].
 First let's take a look at the code and see how when we're using `--target web`
 we're not actually losing any functionality!
 
-```rust
+```rust,wasm
 {{#include ../../../examples/without-a-bundler/src/lib.rs}}
 ```
 

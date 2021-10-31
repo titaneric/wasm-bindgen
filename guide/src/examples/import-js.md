@@ -18,7 +18,7 @@ For example if you're working with this JS file:
 
 you can use it in Rust with:
 
-```rust
+```rust,wasm
 {{#include ../../../examples/import_js/crate/src/lib.rs}}
 ```
 

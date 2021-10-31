@@ -24,7 +24,7 @@ final artifacts today.
 
 Here we define our Rust entry point along with calling the `alert` function.
 
-```rust
+```rust,wasm
 {{#include ../../../examples/hello_world/src/lib.rs}}
 ```
 

@@ -10,6 +10,6 @@ way from bare-bones usage to a `println!`-like macro with `web_sys`.
 
 ## `src/lib.rs`
 
-```rust
+```rust,wasm
 {{#include ../../../examples/console_log/src/lib.rs}}
 ```

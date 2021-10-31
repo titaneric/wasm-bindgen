@@ -9,3 +9,8 @@ extern "C" {
 pub fn greet(name: &str) {
     alert(&format!("Hello, {}!", name));
 }
+
+#[wasm_bindgen(start)]
+pub fn main() {
+    greet("Hello world!");
+}
